@@ -4,6 +4,7 @@ Lookup pinyin and translation for Chinese words using LSP hover
 
 使用LSP hover功能查询中文单词的拼音和翻译.
 
+<img width="626" height="416" alt="image" src="https://github.com/user-attachments/assets/89c4a813-8aab-4ab9-9726-b7031a3606f1" />
 
 ## Usage
 
