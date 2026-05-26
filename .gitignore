@@ -1,0 +1,26 @@
+# Lua artifacts
+*.luac
+luac.out
+
+# Testing / coverage
+luacov.stats.out
+luacov.report.out
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Test data (vendored dependencies for tests)
+.test-data/
