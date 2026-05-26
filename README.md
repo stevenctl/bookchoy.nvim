@@ -6,6 +6,8 @@ Lookup pinyin and translation for Chinese words using LSP hover
 
 <img width="626" height="416" alt="image" src="https://github.com/user-attachments/assets/89c4a813-8aab-4ab9-9726-b7031a3606f1" />
 
+If you find this useful, check out https://bookchoy.app
+
 ## Usage
 
 Install using your package manager of choice, for lazy.nvim:
