@@ -4,6 +4,7 @@ Lookup pinyin and translation for Chinese words using LSP hover
 
 使用LSP hover功能查询中文单词的拼音和翻译.
 
+
 ## Usage
 
 Install using your package manager of choice, for lazy.nvim:
@@ -12,11 +13,7 @@ Install using your package manager of choice, for lazy.nvim:
 {
     "stevenctl/bookchoy.nvim",
     dependencies = { "kkharji/sqlite.lua" },
-    config = function()
-        require("bookchoy").setup({
-            db_path = "/absolute/path/to/dict.db",
-        })
-    end,
+    config = true,
 }
 ```
 
@@ -85,4 +82,3 @@ The bundled dictionary (`zh_en_dictionary.sqlite3.gz`) is built from [bookchoy/c
 It uses a lot of data from [MDBG's CEDICT](https://www.mdbg.net/chinese/dictionary?page=cedict), which is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
 
 [![Creative Commons Badge](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/)
-
