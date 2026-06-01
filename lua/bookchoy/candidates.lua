@@ -26,6 +26,41 @@ local function is_chinese(c)
       or (cp >= 0xF900 and cp <= 0xFAFF)
 end
 
+local function is_blank(line)
+  return line == nil or line:match('^%s*$') ~= nil
+end
+
+-- Build the char array for the whole paragraph containing `row` (0-based),
+-- stitching hard-wrapped lines together so a word split across a single
+-- linebreak (e.g. 太空站工<NL>作) stays continuous for the mapper. A blank
+-- line is a real `\n\n` paragraph break and bounds the paragraph.
+--
+-- `lines` is the buffer's lines (1-based, as returned by nvim_buf_get_lines).
+-- Returns the joined char array and the 1-based index of the cursor char
+-- within it.
+function M.paragraph_window(lines, row, utf16_col)
+  local r = row + 1 -- 1-based index into `lines`
+  local top = r
+  while top > 1 and not is_blank(lines[top - 1]) do top = top - 1 end
+  local bot = r
+  while bot < #lines and not is_blank(lines[bot + 1]) do bot = bot + 1 end
+
+  -- Char offset of the cursor within its own line; paragraph lines before it
+  -- shift the index forward.
+  local cur_idx = M.utf16_col_to_char_index(lines[r] or '', utf16_col)
+
+  local chars = {}
+  local cursor_char = cur_idx
+  for i = top, bot do
+    if i == r then cursor_char = #chars + cur_idx end
+    local lc = utf8_chars(lines[i] or '')
+    for _, c in ipairs(lc) do
+      chars[#chars + 1] = c
+    end
+  end
+  return chars, cursor_char
+end
+
 -- LSP `character` is UTF-16 code units; for BMP (incl. common CJK) this equals
 -- char index. Convert the line's UTF-16 column to a 1-based char index.
 function M.utf16_col_to_char_index(line, utf16_col)

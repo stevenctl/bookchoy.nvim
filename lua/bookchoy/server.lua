@@ -6,10 +6,13 @@ local function handle_hover(params, opts)
 
   local row = params.position.line
   local utf16_col = params.position.character
-  local line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, false)[1] or ''
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  local line = lines[row + 1] or ''
 
   local candidates_mod = require('bookchoy.candidates')
-  local cursor_char, chars = candidates_mod.utf16_col_to_char_index(line, utf16_col)
+  -- Map across hard-wrapped lines so words split by a linebreak inside the
+  -- same paragraph stay continuous; blank lines (`\n\n`) stay as boundaries.
+  local chars, cursor_char = candidates_mod.paragraph_window(lines, row, utf16_col)
 
   local state = require('bookchoy.state')
 
